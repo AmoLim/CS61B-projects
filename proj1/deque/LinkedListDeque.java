@@ -28,6 +28,11 @@ public class LinkedListDeque<T> {
      *      2. The last item of the deque(if it exists) is always at sentinel.prev.
      */
     private Node sentinel;
+
+    /**
+     * Invariants about size:
+     * The size always equals to the number of items in Deque.
+     */
     private int size;
 
     public LinkedListDeque() {
@@ -44,26 +49,32 @@ public class LinkedListDeque<T> {
         size = 1;
     }
 
+    /** Return the number of items in Deque. */
     public int size() {
         return size;
     }
 
+    /** Return true if size == 0. */
     public boolean isEmpty() {
         return size == 0;
     }
 
+    /** Add an item at the front of the Deque. */
     public void addFirst(T itm) {
         sentinel.next.prev = new Node(itm, sentinel, sentinel.next);
         sentinel.next = sentinel.next.prev;
         size++;
     }
 
+    /** Add an item at the end of the Deque. */
     public void addLast(T itm) {
         sentinel.prev.next = new Node(itm, sentinel.prev, sentinel);;
         sentinel.prev = sentinel.prev.next;
         size++;
     }
 
+    /** Prints the items in the deque from first to last, separated by a space.
+     * Once all the items have been printed, print out a new line.*/
     public void printDeque() {
         Node iterator = sentinel.next;
         while (iterator != sentinel) {
@@ -73,6 +84,7 @@ public class LinkedListDeque<T> {
         System.out.println();
     }
 
+    /** Remove and return the item at the front of the Deque. */
     public T removeFirst() {
         if (isEmpty()) {
             return null;
@@ -84,6 +96,7 @@ public class LinkedListDeque<T> {
         return return_item;
     }
 
+    /** Remove and return the item at the end of the Deque. */
     public T removeLast() {
         if (isEmpty()) {
             return null;
@@ -95,6 +108,8 @@ public class LinkedListDeque<T> {
         return return_item;
     }
 
+    /** Gets the item at the given index,
+     * where 0 is the front, 1 is the next item, and so forth. */
     public T get(int index) {
         Node itr = sentinel.next;
         for (int i = 0; i < index; i++) {
@@ -102,5 +117,16 @@ public class LinkedListDeque<T> {
         }
         return itr.item;
     }
-    
+
+    /** Recursive version of get.*/
+    public T getRecursive(int index) {
+        return getRecursive(index, sentinel.next).item;
+    }
+
+    /** Help private method for getRecursive. */
+    private Node getRecursive(int index, Node current) {
+        if (index == 0)
+            return current;
+        return getRecursive(index - 1, current);
+    }
 }
