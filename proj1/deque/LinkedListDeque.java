@@ -111,6 +111,10 @@ public class LinkedListDeque<T> {
     /** Gets the item at the given index,
      * where 0 is the front, 1 is the next item, and so forth. */
     public T get(int index) {
+        if (index >= size || index < 0) {
+            return null;
+        }
+
         Node itr = sentinel.next;
         for (int i = 0; i < index; i++) {
             itr = itr.next;
