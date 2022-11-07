@@ -29,6 +29,17 @@ public class ArrayDeque<T> {
         return size == 0;
     }
 
+    /** Returns the item at the given index, where 0 is the front, 1 is the next item,
+     *  and so forth. If no such item exists, returns null. */
+    public T get(int index) {
+        if (index >= size) {
+            return null;
+        }
+
+        return array[index + nextFirst + 1 >= array.length?
+                index + nextFirst + 1 - array.length: index + nextFirst + 1];
+    }
+
     /** Add item to the front of the list. */
     public void addFirst(T item) {
         if (array.length <= size) {
@@ -127,15 +138,5 @@ public class ArrayDeque<T> {
             itr = itr + 1 >= array.length? 0: itr + 1;
         }
         System.out.println();
-    }
-
-    public static void main(String[] args) {
-        ArrayDeque<Integer> deque = new ArrayDeque<>();
-
-        deque.addFirst(0);
-        deque.addFirst(1);
-        deque.removeLast();
-
-        deque.printDeque();
     }
 }
