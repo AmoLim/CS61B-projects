@@ -1,6 +1,8 @@
 package deque;
 
-public class ArrayDeque<T> {
+import java.util.Iterator;
+
+public class ArrayDeque<T> implements Iterable<T> {
     /** nextFirst always points at the position where the next item will be added to the front of Deque. */
     private int nextFirst;
 
@@ -36,8 +38,7 @@ public class ArrayDeque<T> {
             return null;
         }
 
-        return array[index + nextFirst + 1 >= array.length?
-                index + nextFirst + 1 - array.length: index + nextFirst + 1];
+        return array[getPosAfter(nextFirst, index + 1)];
     }
 
     /** Add item to the front of the list. */
@@ -49,10 +50,7 @@ public class ArrayDeque<T> {
 
         // Update invariants.
         size++;
-        nextFirst--;
-        if (nextFirst < 0) {
-            nextFirst = array.length - 1;
-        }
+        nextFirst = getPosBefore(nextFirst, 1);
     }
 
     /** Add item to the back of the list. */
@@ -64,10 +62,7 @@ public class ArrayDeque<T> {
 
         // Update invariants.
         size++;
-        nextLast++;
-        if (nextLast >= array.length) {
-            nextLast = 0;
-        }
+        nextLast = getPosAfter(nextLast, 1);
     }
 
 
@@ -77,7 +72,7 @@ public class ArrayDeque<T> {
             return null;
         }
 
-        int firstIndex = nextFirst + 1 >= array.length? 0: nextFirst + 1;
+        int firstIndex = getPosAfter(nextFirst, 1);
         // update invariants.
         nextFirst = firstIndex;
         size--;
@@ -93,7 +88,7 @@ public class ArrayDeque<T> {
             return null;
         }
 
-        int lastIndex = nextLast - 1 < 0? array.length - 1: nextLast - 1;
+        int lastIndex = getPosBefore(nextLast, 1);
         // update invariants.
         nextLast = lastIndex;
         size--;
@@ -103,7 +98,7 @@ public class ArrayDeque<T> {
         return lastItem;
     }
 
-    /** Help method to remove the item at index, and check if deque needs to resie.*/
+    /** Internal help method to remove the item at index, and check if deque needs to resie.*/
     private void remove(int index) {
         array[index] = null;
 
@@ -116,11 +111,11 @@ public class ArrayDeque<T> {
     private void resize(int capability) {
         T[] new_array = (T[]) new Object[capability];
 
-        int itr = nextFirst + 1 >= array.length? 0: nextFirst + 1;
+        int itr = getPosAfter(nextFirst, 1);
 
         for (int i = 0; i < size; i++) {
             new_array[i] = array[itr];
-            itr = itr + 1 >= array.length? 0: itr + 1;
+            itr = getPosAfter(itr, 1);
         }
 
         array = new_array;
@@ -135,8 +130,46 @@ public class ArrayDeque<T> {
         int itr = nextFirst + 1 >= array.length? 0: nextFirst + 1;
         for (int i = 0; i < size; i++) {
             System.out.print(array[itr] + " ");
-            itr = itr + 1 >= array.length? 0: itr + 1;
+            itr = getPosAfter(itr, 1);
         }
         System.out.println();
     }
+
+    /** Internal method to get the position after the current position with index. */
+    private int getPosAfter(int pos, int index) {
+        return pos + index >= array.length? pos + index - array.length: pos + index;
+    }
+
+    /** Internal method to get the position before the current position with index. */
+    private int getPosBefore(int pos, int index) {
+        return pos - index < 0? array.length - index: pos - index;
+    }
+
+    /** Get an iterator of Array deque. */
+    @Override
+    public Iterator<T> iterator() {
+        return new ArrayDequeIterator();
+    }
+
+    public class ArrayDequeIterator implements Iterator<T> {
+        private int currentPos;
+
+        public ArrayDequeIterator() {
+            currentPos = getPosAfter(nextFirst, 1);
+        }
+
+        @Override
+        public boolean hasNext() {
+            int nextPos = getPosAfter(currentPos, 1);
+            return nextPos != nextLast;
+        }
+
+        @Override
+        public T next() {
+            T returnItem = array[currentPos];
+            currentPos = getPosAfter(currentPos, 1);
+            return returnItem;
+        }
+    }
+
 }
