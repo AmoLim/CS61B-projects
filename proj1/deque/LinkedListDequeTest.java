@@ -140,12 +140,14 @@ public class LinkedListDequeTest {
         lld1.addLast(2);
         lld1.addLast(3);
 
-        int test = 1;
+        int test = 0;
 
         for (int item : lld1) {
-            assertEquals("Should have the same value", item, test);
             test++;
+            assertEquals("Should have the same value", item, test);
         }
+
+        assertEquals("Should have the same value.", test, 3);
     }
 
     @Test
@@ -160,5 +162,16 @@ public class LinkedListDequeTest {
         int testItem = lld1.get(2);
         assertEquals("Should have the same value", 3, testItem);
 
+    }
+
+    @Test
+    public void toStringTest() {
+        LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
+
+        lld1.addLast(3);
+        lld1.addLast(2);
+        lld1.addLast(1);
+
+        System.out.println(lld1);
     }
 }

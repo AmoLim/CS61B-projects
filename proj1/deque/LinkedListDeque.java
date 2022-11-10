@@ -151,7 +151,7 @@ public class LinkedListDeque<T> implements Iterable<T> {
 
         @Override
         public boolean hasNext() {
-            return  currentNode.next != sentinel;
+            return  currentNode != sentinel;
         }
 
         @Override
@@ -161,4 +161,20 @@ public class LinkedListDeque<T> implements Iterable<T> {
             return returnItem;
         }
     }
+
+    /** Override toString method for LinkedListDeuqe.
+     * print out all the items in the form of { item1, item2, ...} */
+    @Override
+    public String toString() {
+        StringBuilder lldStringBuilder = new StringBuilder("{ ");
+        for (T item : this) {
+            lldStringBuilder.append(item.toString());
+            lldStringBuilder.append(", ");
+        }
+        lldStringBuilder.delete(lldStringBuilder.length() - 2, lldStringBuilder.length() - 1);
+        lldStringBuilder.append("}");
+        return lldStringBuilder.toString();
+    }
+
+
 }
