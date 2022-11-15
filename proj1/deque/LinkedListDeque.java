@@ -92,6 +92,7 @@ public class LinkedListDeque<T> implements Iterable<T> {
             return null;
         }
         T return_item = sentinel.next.item;
+        sentinel.next.item = null;
         sentinel.next = sentinel.next.next;
         sentinel.next.prev = sentinel;
         size--;
@@ -104,13 +105,14 @@ public class LinkedListDeque<T> implements Iterable<T> {
             return null;
         }
         T return_item = sentinel.prev.item;
+        sentinel.prev.item = null;
         sentinel.prev = sentinel.prev.prev;
         sentinel.prev.next = sentinel;
         size--;
         return return_item;
     }
 
-    /** Gets the item at the given index,
+    /** Returns the item at the given index,
      * where 0 is the front, 1 is the next item, and so forth. */
     public T get(int index) {
         if (index >= size || index < 0) {
@@ -124,7 +126,8 @@ public class LinkedListDeque<T> implements Iterable<T> {
         return itr.item;
     }
 
-    /** Recursive version of get.*/
+    /** Recursive version of get.
+     * Returns the item at the given index. */
     public T getRecursive(int index) {
         return getRecursive(index, sentinel.next).item;
     }
@@ -136,7 +139,7 @@ public class LinkedListDeque<T> implements Iterable<T> {
         return getRecursive(index - 1, current);
     }
 
-    /** Get an iterator of linked list deque. */
+    /** Returns an iterator of linked list deque. */
     @Override
     public Iterator<T> iterator() {
         return new LinkedListDequeIterator();
@@ -162,8 +165,9 @@ public class LinkedListDeque<T> implements Iterable<T> {
         }
     }
 
-    /** Override toString method for LinkedListDeuqe.
-     * print out all the items in the form of { item1, item2, ...} */
+    /*
+    /** Override toString method for LinkedListDeque.
+     *  Returns a string of all the items in the form of { item1, item2, ...}.
     @Override
     public String toString() {
         StringBuilder lldStringBuilder = new StringBuilder("{ ");
@@ -174,6 +178,37 @@ public class LinkedListDeque<T> implements Iterable<T> {
         lldStringBuilder.delete(lldStringBuilder.length() - 2, lldStringBuilder.length() - 1);
         lldStringBuilder.append("}");
         return lldStringBuilder.toString();
+    }
+    */
+
+
+    /**
+     * Equals method for LinkedListDeque.
+     * @param obj another compare object.
+     * @return true if two list are equal to each other.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj instanceof LinkedListDeque otherDeque) {
+            // check dequeues are of the same size.
+            if (otherDeque.size != this.size) {
+                return false;
+            }
+
+            // check that all the items are equal to each other.
+            Iterator itrOfOtherDeque = otherDeque.iterator();
+            for (T item : this) {
+                if (!item.equals(itrOfOtherDeque.next())) {
+                    return false;
+                }
+            }
+
+            // pass
+            return true;
+        }
+        // obj is not a LinkedListDeque return false.
+        return false;
     }
 
 

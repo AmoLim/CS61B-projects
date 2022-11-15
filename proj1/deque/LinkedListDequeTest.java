@@ -174,4 +174,42 @@ public class LinkedListDequeTest {
 
         System.out.println(lld1);
     }
+
+    @Test
+    public void equalsSizeTest() {
+        LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
+        LinkedListDeque<Integer> lld2 = new LinkedListDeque<>();
+
+        lld1.addLast(10);
+        lld2.addLast(30);
+        lld2.addLast(40);
+
+        assertEquals("The lists are not of the same size.", false, lld1.equals(lld2));
+    }
+
+    @Test
+    public void equalsSameTest() {
+        LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
+        LinkedListDeque<Integer> lld2 = new LinkedListDeque<>();
+
+        lld1.addLast(10); lld2.addLast(10);
+        lld1.addLast(20); lld2.addLast(20);
+        lld1.addLast(30); lld2.addLast(30);
+        lld1.addLast(40); lld2.addLast(40);
+
+        assertEquals("The lists are the same, but returns false.", true, lld1.equals(lld2));
+    }
+
+    @Test
+    public void equalsNotSameTest() {
+        LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
+        LinkedListDeque<Integer> lld2 = new LinkedListDeque<>();
+
+        lld1.addLast(10); lld2.addLast(40);
+        lld1.addLast(20); lld2.addLast(30);
+        lld1.addLast(30); lld2.addLast(10);
+        lld1.addLast(40); lld2.addLast(20);
+
+        assertEquals("The lists are different, but return true.", false, lld1.equals(lld2));
+    }
 }

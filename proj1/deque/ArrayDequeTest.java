@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 
 
 /** Performs some basic linked list tests. */
-public class ArrayDequeTest {
+public class  ArrayDequeTest {
 
     @Test
     /** Adds a few things to the list, checking isEmpty() and size() are correct,
@@ -160,4 +160,44 @@ public class ArrayDequeTest {
         assertEquals("Should have the same value", 3, testItem);
 
     }
+
+
+    @Test
+    public void equalsSizeTest() {
+        ArrayDeque<Integer> lld1 = new ArrayDeque<>();
+        ArrayDeque<Integer> lld2 = new ArrayDeque<>();
+
+        lld1.addLast(10);
+        lld2.addLast(30);
+        lld2.addLast(40);
+
+        assertEquals("The lists are not of the same size.", false, lld1.equals(lld2));
+    }
+
+    @Test
+    public void equalsSameTest() {
+        ArrayDeque<Integer> lld1 = new ArrayDeque<>();
+        ArrayDeque<Integer> lld2 = new ArrayDeque<>();
+
+        lld1.addLast(10); lld2.addLast(10);
+        lld1.addLast(20); lld2.addLast(20);
+        lld1.addLast(30); lld2.addLast(30);
+        lld1.addLast(40); lld2.addLast(40);
+
+        assertEquals("The lists are the same, but returns false.", true, lld1.equals(lld2));
+    }
+
+    @Test
+    public void equalsNotSameTest() {
+        ArrayDeque<Integer> lld1 = new ArrayDeque<>();
+        ArrayDeque<Integer> lld2 = new ArrayDeque<>();
+
+        lld1.addLast(10); lld2.addLast(40);
+        lld1.addLast(20); lld2.addLast(30);
+        lld1.addLast(30); lld2.addLast(10);
+        lld1.addLast(40); lld2.addLast(20);
+
+        assertEquals("The lists are different, but return true.", false, lld1.equals(lld2));
+    }
+
 }

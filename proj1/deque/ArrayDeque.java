@@ -135,12 +135,12 @@ public class ArrayDeque<T> implements Iterable<T> {
         System.out.println();
     }
 
-    /** Internal method to get the position after the current position with index. */
+    /** Internal method to return the position after the current position with index. */
     private int getPosAfter(int pos, int index) {
         return pos + index >= array.length? pos + index - array.length: pos + index;
     }
 
-    /** Internal method to get the position before the current position with index. */
+    /** Internal method to return the position before the current position with index. */
     private int getPosBefore(int pos, int index) {
         return pos - index < 0? array.length - index: pos - index;
     }
@@ -170,6 +170,34 @@ public class ArrayDeque<T> implements Iterable<T> {
             currentPos = getPosAfter(currentPos, 1);
             return returnItem;
         }
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj instanceof ArrayDeque otherDeque) {
+            // check dequeues are of the same size.
+            if (this.size != otherDeque.size) {
+                return false;
+            }
+
+            // check if items are equals to each other.
+            Iterator itrOfOtherDeque = otherDeque.iterator();
+            for (T item: this) {
+                if (!item.equals(itrOfOtherDeque.next())) {
+                    return false;
+                }
+            }
+
+            // pass.
+            return true;
+        }
+        // obj is not an ArrayDeque, returns false.
+        return false;
     }
 
 }
