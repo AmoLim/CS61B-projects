@@ -165,9 +165,9 @@ public class LinkedListDeque<T> implements Iterable<T> {
         }
     }
 
-    /*
+
     /** Override toString method for LinkedListDeque.
-     *  Returns a string of all the items in the form of { item1, item2, ...}.
+     *  Returns a string of all the items in the form of { item1, item2, ...}. */
     @Override
     public String toString() {
         StringBuilder lldStringBuilder = new StringBuilder("{ ");
@@ -179,7 +179,7 @@ public class LinkedListDeque<T> implements Iterable<T> {
         lldStringBuilder.append("}");
         return lldStringBuilder.toString();
     }
-    */
+
 
 
     /**

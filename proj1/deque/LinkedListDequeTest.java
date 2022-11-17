@@ -1,5 +1,6 @@
 package deque;
 
+import edu.princeton.cs.algs4.StdRandom;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -184,7 +185,7 @@ public class LinkedListDequeTest {
         lld2.addLast(30);
         lld2.addLast(40);
 
-        assertEquals("The lists are not of the same size.", false, lld1.equals(lld2));
+        assertFalse("The lists are not of the same size.", lld1.equals(lld2));
     }
 
     @Test
@@ -197,7 +198,7 @@ public class LinkedListDequeTest {
         lld1.addLast(30); lld2.addLast(30);
         lld1.addLast(40); lld2.addLast(40);
 
-        assertEquals("The lists are the same, but returns false.", true, lld1.equals(lld2));
+        assertTrue("The lists are the same, but returns false.", lld1.equals(lld2));
     }
 
     @Test
@@ -209,7 +210,6 @@ public class LinkedListDequeTest {
         lld1.addLast(20); lld2.addLast(30);
         lld1.addLast(30); lld2.addLast(10);
         lld1.addLast(40); lld2.addLast(20);
-
-        assertEquals("The lists are different, but return true.", false, lld1.equals(lld2));
+        assertFalse("The lists are different, but return true.", lld1.equals(lld2));
     }
 }
