@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import java.util.Iterator;
 
-public class LinkedListDeque<T> implements Iterable<T> {
+public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
     /** Basic structure of LinkedListDeque. */
     private class Node {
         public T item;
@@ -24,14 +24,14 @@ public class LinkedListDeque<T> implements Iterable<T> {
     }
 
     // Private data members.
-    /**
+    /*
      * Invariants about sentinel:
      *      1. The first item of the deque(if it exists) is always at sentinel.next.
      *      2. The last item of the deque(if it exists) is always at sentinel.prev.
      */
     private Node sentinel;
 
-    /**
+    /*
      * Invariants about size:
      * The size always equals to the number of items in Deque.
      */
@@ -52,16 +52,13 @@ public class LinkedListDeque<T> implements Iterable<T> {
     }
 
     /** Return the number of items in Deque. */
+    @Override
     public int size() {
         return size;
     }
 
-    /** Return true if size == 0. */
-    public boolean isEmpty() {
-        return size == 0;
-    }
-
     /** Add an item at the front of the Deque. */
+    @Override
     public void addFirst(T itm) {
         sentinel.next.prev = new Node(itm, sentinel, sentinel.next);
         sentinel.next = sentinel.next.prev;
@@ -69,6 +66,7 @@ public class LinkedListDeque<T> implements Iterable<T> {
     }
 
     /** Add an item at the end of the Deque. */
+    @Override
     public void addLast(T itm) {
         sentinel.prev.next = new Node(itm, sentinel.prev, sentinel);;
         sentinel.prev = sentinel.prev.next;
@@ -77,6 +75,7 @@ public class LinkedListDeque<T> implements Iterable<T> {
 
     /** Prints the items in the deque from first to last, separated by a space.
      * Once all the items have been printed, print out a new line.*/
+    @Override
     public void printDeque() {
         Node iterator = sentinel.next;
         while (iterator != sentinel) {
@@ -87,6 +86,7 @@ public class LinkedListDeque<T> implements Iterable<T> {
     }
 
     /** Remove and return the item at the front of the Deque. */
+    @Override
     public T removeFirst() {
         if (isEmpty()) {
             return null;
@@ -100,6 +100,7 @@ public class LinkedListDeque<T> implements Iterable<T> {
     }
 
     /** Remove and return the item at the end of the Deque. */
+    @Override
     public T removeLast() {
         if (isEmpty()) {
             return null;
@@ -114,6 +115,7 @@ public class LinkedListDeque<T> implements Iterable<T> {
 
     /** Returns the item at the given index,
      * where 0 is the front, 1 is the next item, and so forth. */
+    @Override
     public T get(int index) {
         if (index >= size || index < 0) {
             return null;

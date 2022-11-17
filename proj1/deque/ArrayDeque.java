@@ -2,7 +2,7 @@ package deque;
 
 import java.util.Iterator;
 
-public class ArrayDeque<T> implements Iterable<T> {
+public class ArrayDeque<T> implements Iterable<T> , Deque<T> {
     /** nextFirst always points at the position where the next item will be added to the front of Deque. */
     private int nextFirst;
 
@@ -22,17 +22,14 @@ public class ArrayDeque<T> implements Iterable<T> {
     }
 
     /** Return the number of items in Deque. */
+    @Override
     public int size() {
         return size;
     }
 
-    /** Return true if size == 0. */
-    public boolean isEmpty() {
-        return size == 0;
-    }
-
     /** Returns the item at the given index, where 0 is the front, 1 is the next item,
      *  and so forth. If no such item exists, returns null. */
+    @Override
     public T get(int index) {
         if (index >= size) {
             return null;
@@ -42,6 +39,7 @@ public class ArrayDeque<T> implements Iterable<T> {
     }
 
     /** Add item to the front of the list. */
+    @Override
     public void addFirst(T item) {
         if (array.length <= size) {
             resize(2 * array.length + 1);
@@ -54,6 +52,7 @@ public class ArrayDeque<T> implements Iterable<T> {
     }
 
     /** Add item to the back of the list. */
+    @Override
     public void addLast(T item) {
         if (array.length <= size) {
             resize(2 * array.length + 1);
@@ -67,6 +66,7 @@ public class ArrayDeque<T> implements Iterable<T> {
 
 
     /** Remove the item at the front of the Deque. */
+    @Override
     public T removeFirst() {
         if (isEmpty()) {
             return null;
@@ -83,6 +83,7 @@ public class ArrayDeque<T> implements Iterable<T> {
     }
 
     /** Remove the item at the back of the Deque. */
+    @Override
     public T removeLast() {
         if (isEmpty()) {
             return null;
@@ -126,6 +127,7 @@ public class ArrayDeque<T> implements Iterable<T> {
     /** Prints the items in the deque from first to last, separated by a space.
      * Once all the items have been printed, print out a new line.
      */
+    @Override
     public void printDeque() {
         int itr = nextFirst + 1 >= array.length? 0: nextFirst + 1;
         for (int i = 0; i < size; i++) {
