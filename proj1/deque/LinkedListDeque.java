@@ -1,22 +1,20 @@
 package deque;
 
-import org.junit.Test;
-
 import java.util.Iterator;
 
 public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
     /** Basic structure of LinkedListDeque. */
     private class Node {
-        public T item;
-        public Node prev;
-        public Node next;
+        private T item;
+        private Node prev;
+        private Node next;
 
-        public Node(Node p, Node n) {
+        Node(Node p, Node n) {
             prev = p;
             next = n;
         }
 
-        public Node(T i, Node p, Node n) {
+        Node(T i, Node p, Node n) {
             item = i;
             prev = p;
             next = n;
@@ -44,13 +42,6 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         size = 0;
     }
 
-    public LinkedListDeque(T itm) {
-        sentinel = new Node(null, null);
-        sentinel.next = new Node(itm, sentinel, sentinel);
-        sentinel.prev = sentinel.next;
-        size = 1;
-    }
-
     /** Return the number of items in Deque. */
     @Override
     public int size() {
@@ -68,6 +59,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
     /** Add an item at the end of the Deque. */
     @Override
     public void addLast(T itm) {
+
         sentinel.prev.next = new Node(itm, sentinel.prev, sentinel);;
         sentinel.prev = sentinel.prev.next;
         size++;
@@ -91,12 +83,12 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         if (isEmpty()) {
             return null;
         }
-        T return_item = sentinel.next.item;
+        T returnItem = sentinel.next.item;
         sentinel.next.item = null;
         sentinel.next = sentinel.next.next;
         sentinel.next.prev = sentinel;
         size--;
-        return return_item;
+        return returnItem;
     }
 
     /** Remove and return the item at the end of the Deque. */
@@ -105,12 +97,12 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         if (isEmpty()) {
             return null;
         }
-        T return_item = sentinel.prev.item;
+        T returnItem = sentinel.prev.item;
         sentinel.prev.item = null;
         sentinel.prev = sentinel.prev.prev;
         sentinel.prev.next = sentinel;
         size--;
-        return return_item;
+        return returnItem;
     }
 
     /** Returns the item at the given index,
@@ -136,9 +128,10 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
 
     /** Help private method for getRecursive. */
     private Node getRecursive(int index, Node current) {
-        if (index == 0)
+        if (index == 0) {
             return current;
-        return getRecursive(index - 1, current);
+        }
+        return getRecursive(index - 1, current.next);
     }
 
     /** Returns an iterator of linked list deque. */
@@ -147,10 +140,10 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         return new LinkedListDequeIterator();
     }
 
-    public class LinkedListDequeIterator implements Iterator<T> {
+    private class LinkedListDequeIterator implements Iterator<T> {
         private Node currentNode;
 
-        public LinkedListDequeIterator() {
+        LinkedListDequeIterator() {
             currentNode = sentinel.next;
         }
 
@@ -166,22 +159,6 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
             return returnItem;
         }
     }
-
-
-    /** Override toString method for LinkedListDeque.
-     *  Returns a string of all the items in the form of { item1, item2, ...}. */
-    @Override
-    public String toString() {
-        StringBuilder lldStringBuilder = new StringBuilder("{ ");
-        for (T item : this) {
-            lldStringBuilder.append(item.toString());
-            lldStringBuilder.append(", ");
-        }
-        lldStringBuilder.delete(lldStringBuilder.length() - 2, lldStringBuilder.length() - 1);
-        lldStringBuilder.append("}");
-        return lldStringBuilder.toString();
-    }
-
 
 
     /**
@@ -205,7 +182,6 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
                     return false;
                 }
             }
-
             // pass
             return true;
         }

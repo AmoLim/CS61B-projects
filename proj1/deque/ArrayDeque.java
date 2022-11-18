@@ -2,14 +2,20 @@ package deque;
 
 import java.util.Iterator;
 
-public class ArrayDeque<T> implements Iterable<T> , Deque<T> {
-    /** nextFirst always points at the position where the next item will be added to the front of Deque. */
+public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
+    /*
+        nextFirst always points at the position where
+        the next item will be added to the front of Deque.
+    */
     private int nextFirst;
 
-    /** nextLast always points at the position where the next item will be added to the back of Deque. */
+    /*
+        nextLast always points at the position where the
+        next item will be added to the back of Deque.
+    */
     private int nextLast;
 
-    /** size always equals to the number of items in Deque. */
+    /* size always equals to the number of items in Deque. */
     private int size;
 
     private T[] array;
@@ -110,16 +116,16 @@ public class ArrayDeque<T> implements Iterable<T> , Deque<T> {
 
     /** Resizing the underlying array to target capability. */
     private void resize(int capability) {
-        T[] new_array = (T[]) new Object[capability];
+        T[] newArray = (T[]) new Object[capability];
 
         int itr = getPosAfter(nextFirst, 1);
 
         for (int i = 0; i < size; i++) {
-            new_array[i] = array[itr];
+            newArray[i] = array[itr];
             itr = getPosAfter(itr, 1);
         }
 
-        array = new_array;
+        array = newArray;
         nextLast = size;
         nextFirst = array.length - 1;
     }
@@ -129,7 +135,7 @@ public class ArrayDeque<T> implements Iterable<T> , Deque<T> {
      */
     @Override
     public void printDeque() {
-        int itr = nextFirst + 1 >= array.length? 0: nextFirst + 1;
+        int itr = nextFirst + 1 >= array.length ? 0 : nextFirst + 1;
         for (int i = 0; i < size; i++) {
             System.out.print(array[itr] + " ");
             itr = getPosAfter(itr, 1);
@@ -137,14 +143,16 @@ public class ArrayDeque<T> implements Iterable<T> , Deque<T> {
         System.out.println();
     }
 
-    /** Internal method to return the position after the current position with index. */
+    /** Internal method to return the position
+     * after the current position with index. */
     private int getPosAfter(int pos, int index) {
-        return pos + index >= array.length? pos + index - array.length: pos + index;
+        return pos + index >= array.length ? pos + index - array.length : pos + index;
     }
 
-    /** Internal method to return the position before the current position with index. */
+    /** Internal method to return the position
+     * before the current position with index. */
     private int getPosBefore(int pos, int index) {
-        return pos - index < 0? array.length - index: pos - index;
+        return pos - index < 0 ? array.length - index : pos - index;
     }
 
     /** Get an iterator of Array deque. */
@@ -153,28 +161,35 @@ public class ArrayDeque<T> implements Iterable<T> , Deque<T> {
         return new ArrayDequeIterator();
     }
 
-    public class ArrayDequeIterator implements Iterator<T> {
+    private class ArrayDequeIterator implements Iterator<T> {
         private int currentPos;
+        private int itemCounter;
 
-        public ArrayDequeIterator() {
+        ArrayDequeIterator() {
             currentPos = getPosAfter(nextFirst, 1);
+            itemCounter = size;
         }
 
         @Override
         public boolean hasNext() {
-            int nextPos = getPosAfter(currentPos, 1);
-            return nextPos != nextLast;
+            return itemCounter != 0;
         }
 
         @Override
         public T next() {
             T returnItem = array[currentPos];
             currentPos = getPosAfter(currentPos, 1);
+            itemCounter--;
             return returnItem;
         }
     }
 
 
+    /**
+     * Check the equality of this and obj
+     * @param obj other object
+     * @return true if they are equal.
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -201,5 +216,7 @@ public class ArrayDeque<T> implements Iterable<T> , Deque<T> {
         // obj is not an ArrayDeque, returns false.
         return false;
     }
+
+
 
 }

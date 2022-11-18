@@ -191,7 +191,7 @@ public class LinkedListDequeTest {
     @Test
     public void equalsSameTest() {
         LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
-        LinkedListDeque<Integer> lld2 = new LinkedListDeque<>();
+        ArrayDeque<Integer> lld2 = new ArrayDeque<>();
 
         lld1.addLast(10); lld2.addLast(10);
         lld1.addLast(20); lld2.addLast(20);
