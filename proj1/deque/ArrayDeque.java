@@ -196,27 +196,25 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
             return true;
         }
 
-        if (obj instanceof ArrayDeque otherDeque) {
-            // check dequeues are of the same size.
-            if (this.size != otherDeque.size) {
+        if (!(obj instanceof Deque)) {
+            return false;
+        }
+
+        Deque<T> otherDeque = (Deque<T>) obj;
+        if (otherDeque.size() != this.size) {
+            return false;
+        }
+
+        int i = 0;
+        for (T item : this) {
+            if (!item.equals(otherDeque.get(i))) {
                 return false;
             }
-
-            // check if items are equals to each other.
-            Iterator itrOfOtherDeque = otherDeque.iterator();
-            for (T item: this) {
-                if (!item.equals(itrOfOtherDeque.next())) {
-                    return false;
-                }
-            }
-
-            // pass.
-            return true;
+            i++;
         }
-        // obj is not an ArrayDeque, returns false.
-        return false;
+
+        // pass
+        return true;
     }
-
-
 
 }

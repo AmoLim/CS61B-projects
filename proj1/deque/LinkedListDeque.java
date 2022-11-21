@@ -59,8 +59,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
     /** Add an item at the end of the Deque. */
     @Override
     public void addLast(T itm) {
-
-        sentinel.prev.next = new Node(itm, sentinel.prev, sentinel);;
+        sentinel.prev.next = new Node(itm, sentinel.prev, sentinel);
         sentinel.prev = sentinel.prev.next;
         size++;
     }
@@ -168,26 +167,28 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
      */
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj instanceof LinkedListDeque otherDeque) {
-            // check dequeues are of the same size.
-            if (otherDeque.size != this.size) {
-                return false;
-            }
-
-            // check that all the items are equal to each other.
-            Iterator itrOfOtherDeque = otherDeque.iterator();
-            for (T item : this) {
-                if (!item.equals(itrOfOtherDeque.next())) {
-                    return false;
-                }
-            }
-            // pass
+        if (this == obj) {
             return true;
         }
-        // obj is not a LinkedListDeque return false.
-        return false;
+
+        if (!(obj instanceof Deque)) {
+            return false;
+        }
+
+        Deque<T> otherDeque = (Deque<T>) obj;
+        if (otherDeque.size() != this.size) {
+            return false;
+        }
+
+        int i = 0;
+        for (T item : this) {
+            if (!item.equals(otherDeque.get(i))) {
+                return false;
+            }
+            i++;
+        }
+
+        // pass
+        return true;
     }
-
-
 }

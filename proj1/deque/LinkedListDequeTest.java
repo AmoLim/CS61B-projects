@@ -205,11 +205,13 @@ public class LinkedListDequeTest {
     public void equalsNotSameTest() {
         LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
         LinkedListDeque<Integer> lld2 = new LinkedListDeque<>();
+        LinkedListDeque<Integer> lld3 = null;
 
         lld1.addLast(10); lld2.addLast(40);
         lld1.addLast(20); lld2.addLast(30);
         lld1.addLast(30); lld2.addLast(10);
         lld1.addLast(40); lld2.addLast(20);
         assertFalse("The lists are different, but return true.", lld1.equals(lld2));
+        assertFalse(lld1.equals(lld3));
     }
 }
